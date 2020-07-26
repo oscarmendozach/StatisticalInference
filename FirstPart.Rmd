@@ -1,0 +1,71 @@
+---
+title: "Statistical Inference Project Part 1 - Simulation"
+author: "OscarM"
+date: "7/5/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Simulation Exercise Instructions
+
+In this project you will investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution can be simulated in R with rexpn(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. Set lambda = 0.2 for all the simulations. You will investigate the distribution of averages of 40 exponentials. Nota that ypu will need to do a thousand simulations.
+
+Illustrate via simulation and associated explanatory test the properties of the distribution of the mean of 40 exponentials. You should:
+
+1. Show the sample mean and compare it to the theoretical mean of the distribution.
+
+2. Show how variable the sample is (via inference) and compare it to the theoretical variance of the distribution.
+
+3. Show that the distribution is approximately normal.
+
+In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials.
+
+## Overview
+
+The first part of this project will deal with Simulations of of the exponential distribution and the behaviour of the distribution of averages, in order to check the consistency of the Central Limit Theory.
+
+## Simulations
+
+The exponential distribution can be simulated in R with rexpn(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. Set lambda = 0.2 for all the simulations. You will investigate the distribution of averages of 40 exponentials. Nota that ypu will need to do a thousand simulations.
+
+```{r echo = TRUE}
+set.seed(6985)
+lambda <- 0.2
+n <- 40
+simulation_number <- 1000
+simulated_sample <- replicate(n = simulation_number,expr = rexp(n, lambda) )
+simulated_means <- apply(X = simulated_sample, MARGIN = 2, FUN = mean)
+```
+
+## Sample Mean vs Theoretical Mean
+
+In this point, the sample simulated mean will be compared to the theoretical mean accoding to the mathematical expression mean = 1/lambda
+
+```{r echo = TRUE}
+sample_mean <- mean(simulated_means)
+theoretical_mean <- 1/lambda
+
+print(sample_mean)
+
+print(theoretical_mean)
+```
+
+
+## Sample Variance vs Theoretical Variance
+
+Here, two disperssion variables will be analized: The Variance and the Standard Deviation
+
+```{r}
+sample_variance <- var(simulated_means)
+theoretical_variance <- (1/lambda)^2/n
+
+sample_ds <- sd(simulated_means)
+theoretical_ds <- 1/(lambda*sqrt(n))
+```
+
+## Distribution
+
+
